@@ -38,7 +38,9 @@ class Layer:
         os.makedirs(directory, exist_ok=True)
         for svg, sample in tqdm(parsed_svgs.items(), desc=layer.name):
             filename = os.path.basename(svg)
-            path = os.path.join(directory, filename[:filename.rfind('.')])
+            if '.' in filename:
+                filename = filename[:filename.rfind('.')]
+            path = os.path.join(directory, filename)
             byclass = sample['byclass']
             height, width = sample['height'], sample['width']
             image = layer(byclass, height, width)
